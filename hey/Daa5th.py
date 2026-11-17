@@ -1,62 +1,87 @@
 
-print("N-Queens Problem using Backtracking")
+def n_queens():
 
-n = int(input("Enter number of queens: "))
+    print("N-Queens Problem using Backtracking")
 
-if n <= 0:
-    print("Enter a positive integer.")
-else:
-    board = [[0 for _ in range(n)] for _ in range(n)]
+    n = int(input("Enter number of queens: "))
 
-    def is_safe(row, col):
-        # Check column in previous rows
-        for i in range(row):
-            if board[i][col] == 1:
-                return False
+    if n <= 0:
+        print("Enter a positive integer.")
+    else:
+        board = [[0 for _ in range(n)] for _ in range(n)]
 
-        # Check upper-left diagonal
-        i = row - 1
-        j = col - 1
+        def is_safe(row, col):
+            # Check column in previous rows
+            for i in range(row):
+                if board[i][col] == 1:
+                    return False
 
-        while i >= 0 and j >= 0:
-            if board[i][j] == 1:
-                return False
-            i -= 1
-            j -= 1
+            # Check upper-left diagonal
+            i = row - 1
+            j = col - 1
 
-        # Check upper-right diagonal
-        i = row - 1
-        j = col + 1
+            while i >= 0 and j >= 0:
+                if board[i][j] == 1:
+                    return False
+                i -= 1
+                j -= 1
 
-        while i >= 0 and j < n:
-            if board[i][j] == 1:
-                return False
-            i -= 1
-            j += 1
+            # Check upper-right diagonal
+            i = row - 1
+            j = col + 1
 
-        return True
+            while i >= 0 and j < n:
+                if board[i][j] == 1:
+                    return False
+                i -= 1
+                j += 1
 
-    def solve(row):
-        # All queens are placed
-        if row == n:
             return True
 
-        # Try every column
-        for col in range(n):
-            if is_safe(row, col):
-                board[row][col] = 1
+        def solve(row):
+            # All queens are placed
+            if row == n:
+                return True
 
-                if solve(row + 1):
-                    return True
+            # Try every column
+            for col in range(n):
+                if is_safe(row, col):
+                    board[row][col] = 1
 
-                # Backtrack
-                board[row][col] = 0
+                    if solve(row + 1):
+                        return True
 
-        return False
+                    # Backtrack
+                    board[row][col] = 0
 
-    if solve(0):
-        print("Solution:")
-        for row in board:
-            print(row)
-    else:
-        print("No solution exists for", n, "queens.")
+            return False
+
+        if solve(0):
+            print("Solution:")
+            for row in board:
+                print(row)
+        else:
+            print("No solution exists for", n, "queens.")
+
+
+def main():
+
+    while True:
+        print("\n===== N-QUEENS PROBLEM =====")
+        print("1. Solve N-Queens")
+        print("2. Exit")
+
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            n_queens()
+
+        elif choice == 2:
+            print("Exiting program. Thank you!")
+            break
+
+        else:
+            print("Invalid choice! Please select 1 or 2.")
+
+
+main()
