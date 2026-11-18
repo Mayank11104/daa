@@ -61,14 +61,42 @@ def huffman_encoding(text):
 
     print("\nEncoded String:", encoded)
 
+    return encoded, codes
+
+
+# # Huffman Decoding Function
+# def huffman_decoding(encoded, codes):
+#
+#     # Reverse the codes dictionary to map code -> character
+#     reverse_codes = {code: ch for ch, code in codes.items()}
+#
+#     decoded = ""
+#     current_code = ""
+#
+#     for bit in encoded:
+#         current_code += bit
+#         if current_code in reverse_codes:
+#             decoded += reverse_codes[current_code]
+#             current_code = ""
+#
+#     if current_code:
+#         print("\nWarning: Invalid or incomplete Huffman code bits:", current_code)
+#
+#     print("\nDecoded String:", decoded)
+#     return decoded
+
 
 # Main Menu
 def main():
+    last_encoded = None
+    last_codes = None
+
     while True:
 
         print("\n===== HUFFMAN ENCODING =====")
         print("1. Encode String")
-        print("2. Exit")
+        # print("2. Decode String")
+        print("2. Exit")  # Change to "3. Exit" when Decode String is uncommented
 
         choice = int(input("Enter your choice: "))
 
@@ -79,12 +107,26 @@ def main():
             if not text:
                 print("Please enter a non-empty string.")
             else:
-                huffman_encoding(text)
+                last_encoded, last_codes = huffman_encoding(text)
 
-        elif choice == 2:
+        # elif choice == 2:
+        #
+        #     if last_codes is None:
+        #         print("Please encode a string first (Option 1) to generate Huffman codes.")
+        #     else:
+        #         encoded_input = input(
+        #             f"Enter encoded string (or press Enter to decode '{last_encoded}'): "
+        #         ).strip()
+        #         if not encoded_input:
+        #             encoded_input = last_encoded
+        #         huffman_decoding(encoded_input, last_codes)
+
+        elif choice == 2:  # Change to 3 when Decode String is uncommented
 
             print("Exiting program. Thank you!")
             break
 
         else:
             print("Invalid choice! Please select 1 or 2.")
+
+main()

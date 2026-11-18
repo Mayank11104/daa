@@ -21,7 +21,7 @@ def fractional_knapsack():
                 break
 
             ratio = value / weight
-            items.append((ratio, value, weight))
+            items.append((ratio, value, weight, i + 1))
 
         if valid:
             capacity = int(input("Enter knapsack capacity: "))
@@ -31,21 +31,50 @@ def fractional_knapsack():
             else:
                 items.sort(key=lambda item: item[0], reverse=True)
 
-                total_value = 0
+                print("\nItems Sorted by Value/Weight Ratio:")
+                for ratio, value, weight, item_no in items:
+                    print("Item:", item_no,
+                          "| Value:", value,
+                          "| Weight:", weight,
+                          "| Ratio:", round(ratio, 2))
 
-                for ratio, value, weight in items:
+                total_value = 0
+                selected_weight = 0
+
+                print("\nSelected Items in Knapsack:")
+
+                for ratio, value, weight, item_no in items:
+
                     if capacity == 0:
                         break
 
                     if weight <= capacity:
                         capacity -= weight
                         total_value += value
+                        selected_weight += weight
+
+                        print("Item:", item_no,
+                              "| Fully Selected",
+                              "| Weight:", weight,
+                              "| Value:", value)
+
                     else:
                         fraction = capacity / weight
-                        total_value += value * fraction
+                        used_weight = capacity
+                        added_value = value * fraction
+
+                        total_value += added_value
+                        selected_weight += used_weight
+
+                        print("Item:", item_no,
+                              "| Partially Selected",
+                              "| Weight:", used_weight,
+                              "| Value:", round(added_value, 2))
+
                         capacity = 0
 
-                print("Maximum value =", total_value)
+                print("\nTotal Weight Selected:", selected_weight)
+                print("Maximum Value:", round(total_value, 2))
 
 
 def main():
